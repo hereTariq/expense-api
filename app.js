@@ -11,8 +11,13 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use('/expense', expenseRoutes);
 
-mongoose.connect(process.env.URI);
-
-app.listen(PORT, () =>
-    console.log('server is running on http://localhost:' + PORT)
-);
+mongoose.set('strictQuery', false);
+mongoose
+    .connect(process.env.URI)
+    .then((result) => {
+        console.log('mongodb connected');
+        app.listen(PORT, () =>
+            console.log('server is running on http://localhost:' + PORT)
+        );
+    })
+    .catch((err) => console.log(err));
