@@ -16,8 +16,9 @@ mongoose
     .connect(process.env.URI)
     .then((result) => {
         console.log('mongodb connected');
-        app.listen(PORT, () =>
-            console.log('server is running on http://localhost:' + PORT)
-        );
     })
     .catch((err) => console.log(err));
+
+app.listen(PORT, () =>
+    console.log('server is running on http://localhost:' + PORT)
+);
