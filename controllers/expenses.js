@@ -1,14 +1,17 @@
 const Expense = require('../models/expenses');
 
 exports.createExpense = async (req, res, next) => {
-    const { title, amount } = req.body;
+    const { title, amount, date } = req.body;
 
     if (!title || !amount) {
         return res
             .status(422)
             .json({ status: false, message: "title or amount can't be empty" });
     }
-    const newExpense = new Expense({ title, amount });
+    if (!date) {
+        date = Date.now;
+    }
+    const newExpense = new Expense({ title, amount, date });
     const savedExpense = await newExpense.save();
     res.status(201).json({
         status: true,
